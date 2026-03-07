@@ -46,3 +46,32 @@ export const detail = async (req: Request, res: Response) => {
 
 
 }
+
+// [Patch] /songs/yes/typeLike/:idSong
+export const like  = async (req: Request, res: Response) => { 
+    const idSong: string = req.params.idSong.toString();
+    const typeLike: string = req.params.typeLike.toString();
+    const song = await Song.findOne({
+        _id: idSong,
+        status: "active",
+        deleted: false
+    });
+
+    const newLike: number = typeLike == "like" ? song.like + 1 : song.like - 1;
+
+    // updatesong.like + 1
+    await Song.updateOne({
+        _id: idSong,
+    }, {
+        like: newLike
+    })
+
+    res.json({
+        code: 200,
+        message: "Thành công",
+        like: newLike
+    })
+
+
+
+}
