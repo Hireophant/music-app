@@ -30,6 +30,23 @@ if (aplayer) {
     console.log("player ended");
     avatar.style.animationPlayState = "paused";
   });
+
+  ap.on("ended", function () {
+    const link = `/songs/listen/${dataSong.id}`;
+
+    const option = {
+      method: "PATCH",
+    };
+
+    fetch(link, option)
+      .then((res) => res.json())
+      .then((data) => {
+        const elementListenSpan = document.querySelector(
+          ".singer-detail .inner-listen span",
+        );
+        elementListenSpan.innerHTML = `${data.listen} lượt nghe`;
+      });
+  });
 }
 
 // End Ap player
