@@ -6,7 +6,8 @@ import adminRoutes from "./routes/admin/index.route";
 
 import { systemConfig } from "./config/config";
 import path from "path";
-
+import bodyParser  from   "body-parser";
+ 
 dotenv.config();
 
 database.connect();
@@ -15,6 +16,7 @@ database.connect();
 const app: Express = express();
 const port: number | string = process.env.PORT || 3000;
 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 

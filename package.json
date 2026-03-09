@@ -11,11 +11,15 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "body-parser": "^2.2.2",
+    "cloudinary": "^2.9.0",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "mongoose": "^9.2.4",
     "mongoose-slug-updater": "^3.3.0",
+    "multer": "^2.1.1",
     "pug": "^3.0.3",
+    "streamifier": "^0.1.1",
     "tinymce": "^8.3.2",
     "unidecode": "^1.1.0"
   },
