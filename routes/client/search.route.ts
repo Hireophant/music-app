@@ -3,6 +3,8 @@ import * as controller from "../../controllers/client/search.controller";
 const router: Router = Router();
 
 // [Get] /search
-router.get("/result", controller.result);
+router.get("/:type", controller.result);
+
+
 
 export default router;

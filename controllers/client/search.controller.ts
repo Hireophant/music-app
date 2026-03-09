@@ -4,8 +4,9 @@ import Singer from "../../models/singer.model";
 import { convertToSlug } from "../../helpers/convertToSlug";
 
 
-// [Get] /search/result
+// [Get] /search/:type
 export const result = async (req: Request, res: Response) => {
+    const type = req.params.type;
     const keyword: string = req.query.keyword.toString();
     let newSongs = [];
     if(keyword) {
@@ -14,22 +15,48 @@ export const result = async (req: Request, res: Response) => {
         // Tạo ra slug không dấu, có thêm dấu - ngăn cách
         const stringSlug = convertToSlug(keyword);
         const regexSlug = new RegExp(stringSlug, "i");
-        newSongs = await Song.find({
+        const songs = await Song.find({
             $or: [
                 { title: regex },
                 { slug: regexSlug }
             ]
         })
-        for (const item of newSongs) {
+        for (const item of songs) {
             const infoSinger = await Singer.findOne({
                 _id: item.singerId,
             })
-            item["infoSinger"] = infoSinger;
+            //item["infoSinger"] = infoSinger;
+            newSongs.push({
+                id: item.id,
+                title: item.title,
+                avatar: item.avatar,
+                audio: item.audio,
+                slug: item.slug,
+                like: item.like,
+                infoSinger: {
+                    fullName: infoSinger.fullName,
+                }
+            })
         }
     }
-    res.render("client/pages/search/result", {
-        pageTitle: "Kết quả tìm kiếm",
-        keyword: keyword,
-        songs: newSongs
-    });
+
+    switch (type) {
+        case "result":
+            res.render("client/pages/search/result", {
+                pageTitle: "Kết quả tìm kiếm",
+                keyword: keyword,
+                songs: newSongs
+            });
+            break;
+        case "suggest":
+            res.json({
+                code: 200,
+                message: "Thành công",  
+                list: newSongs
+            });
+            break;
+    
+        default:
+            break;
+    }
 };
