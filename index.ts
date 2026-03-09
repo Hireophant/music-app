@@ -1,7 +1,7 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import * as database from "./config/database";
-import clientRoutes from "./routes/index.route";
+import clientRoutes from "./routes/client/index.route";
 
 dotenv.config();
 

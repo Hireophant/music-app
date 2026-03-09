@@ -63,26 +63,28 @@ if (buttonLike) {
 //End Button like
 
 // Button favorite
-const buttonFavorite = document.querySelector("[button-favorite]");
-if (buttonFavorite) {
-  buttonFavorite.addEventListener("click", () => {
-    const idSong = buttonFavorite.getAttribute("button-favorite");
-    const isActive = buttonFavorite.classList.contains("active");
-    const typeFavorite = isActive ? "unfavorite" : "favorite";
+const buttonFavorite = document.querySelectorAll("[button-favorite]");
+if (buttonFavorite.length > 0) {
+  buttonFavorite.forEach((item) => {
+    item.addEventListener("click", () => {
+      const idSong = item.getAttribute("button-favorite");
+      const isActive = item.classList.contains("active");
+      const typeFavorite = isActive ? "unfavorite" : "favorite";
 
-    const link = `/songs/favorite/${typeFavorite}/${idSong}`;
+      const link = `/songs/favorite/${typeFavorite}/${idSong}`;
 
-    const option = {
-      method: "PATCH",
-    };
+      const option = {
+        method: "PATCH",
+      };
 
-    fetch(link, option)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.code == 200) {
-          buttonFavorite.classList.toggle("active");
-        }
-      });
+      fetch(link, option)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.code == 200) {
+            item.classList.toggle("active");
+          }
+        });
+    });
   });
 }
 
