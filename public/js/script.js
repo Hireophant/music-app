@@ -15,6 +15,8 @@ if (aplayer) {
         artist: dataSinger.fullName,
         url: dataSong.audio,
         cover: dataSong.avatar,
+        lrcType: 1,
+        lrc: dataSong.lyrics,
       },
     ],
     autoplay: true,
