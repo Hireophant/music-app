@@ -11,6 +11,11 @@
     "build": "tsc && node copy-dir.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "pre-commit":[
+    "ts.check",
+    "build",
+    "add-build"
+  ],
   "dependencies": {
     "body-parser": "^2.2.2",
     "cloudinary": "^2.9.0",
